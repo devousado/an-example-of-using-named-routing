@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:teste_riverpod/model.dart';
+import 'package:teste_riverpod/router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -64,53 +66,5 @@ class SecondHome extends ConsumerWidget {
   }
 }
 
-//here is the route
-class MyRouter {
-  static Route<dynamic> generaretRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case "home":
-        return MaterialPageRoute(builder: (context) => Home());
-      case "homeSecond":
-        return MaterialPageRoute(
-          builder: (context) {
-            UserModel user = settings.arguments as UserModel;
-            return SecondHome(
-              user: user,
-            );
-          },
-        );
-      default:
-        return MaterialPageRoute(
-          builder: (context) => const Scaffold(
-            body: Text("no route found"),
-          ),
-        );
-    }
-  }
-}
 
-class UserModel {
-  String name;
-  int id;
-  UserModel({
-    required this.name,
-    required this.id,
-  });
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'name': name,
-      'id': id,
-    };
-  }
-
-  factory UserModel.fromMap(Map<String, dynamic> map) {
-    return UserModel(
-      name: map['name'] as String,
-      id: map['id'] as int,
-    );
-  }
-
-  @override
-  String toString() => 'UserModel(name: $name, id: $id)';
-}
